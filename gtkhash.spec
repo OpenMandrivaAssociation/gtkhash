@@ -47,8 +47,14 @@ This package contains the GTK+2 version of the program.
 %autosetup -p1
 
 %build
-%meson
-
+%meson  \
+        -Dappstream=true \
+        -Dbuild-caja=true \
+        -Dbuild-nemo=true \
+        -Dbuild-thunar
+        
+# compiling nautilus plugin is disabled due upstream bug, not compatibile with nautilus gtk4 yet        
+      
 %meson_build
 
 %install
@@ -57,3 +63,9 @@ This package contains the GTK+2 version of the program.
 %find_lang %{name}
 
 %files -f %{name}.lang
+%{_bindir}/gtkhash
+%{_datadir}/applications/org.gtkhash.gtkhash.desktop
+%{_datadir}/glib-2.0/schemas/org.gtkhash.gschema.xml
+%{_datadir}/metainfo/org.gtkhash.gtkhash.appdata.xml
+%{_iconsdir}/hicolor/*x*/apps/org.gtkhash.gtkhash.png
+%{_iconsdir}/hicolor/scalable/apps/org.gtkhash.gtkhash.svg
