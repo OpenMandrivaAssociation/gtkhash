@@ -6,7 +6,6 @@ Version:	1.5
 Release:	1
 License:	GPLv2+
 Group:		File tools
-License:        GPLv2+
 URL:            https://github.com/tristanheaven/gtkhash
 Source0:        https://github.com/tristanheaven/%{name}/releases/download/v%{version}/%{name}-%{version}.tar.xz
 
