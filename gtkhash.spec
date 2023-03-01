@@ -52,7 +52,7 @@ This package contains the GTK+2 version of the program.
 %meson_build
 
 %install
-%make_install
+%meson_install
 
 %find_lang %{name}
 
