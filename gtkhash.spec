@@ -1,19 +1,31 @@
+%bcond_with nautilus
+
 Summary:	GTK+ utility for computing message digests or checksums
 Name:		gtkhash
-Version:	0.7.0
+Version:	1.5
 Release:	1
 License:	GPLv2+
 Group:		File tools
-Url:		http://gtkhash.sourceforge.net/
-# https://github.com/tristanheaven/gtkhash/archive/%{version}.tar.gz
-Source0:	%{name}-%{version}.tar.gz
-Source1:	gtkhash.xpm
-BuildRequires:	imagemagick
-BuildRequires:	intltool
-BuildRequires:	gettext-devel
-BuildRequires:	mhash-devel
-BuildRequires:	pkgconfig(gtk+-2.0)
-BuildRequires:	pkgconfig(libgcrypt)
+License:        GPLv2+
+URL:            https://github.com/tristanheaven/gtkhash
+Source0:        https://github.com/tristanheaven/%{name}/releases/download/v%{version}/%{name}-%{version}.tar.xz
+
+BuildRequires:  appstream-util
+BuildRequires:  gettext
+BuildRequires:  meson
+BuildRequires:  mhash-devel
+BuildRequires:  pkgconfig(gtk+-3.0)
+BuildRequires:  pkgconfig(libb2)
+BuildRequires:  pkgconfig(libgcrypt)
+
+%if %with nautilus
+# Nautilus support is broken due switch to GTK4, so disable it until fixed. See issue below:
+# https://github.com/tristanheaven/gtkhash/issues/139
+BuildRequires:  pkgconfig(libnautilus-extension-4)
+%endif
+BuildRequires:  pkgconfig(libcaja-extension)
+BuildRequires:  pkgconfig(libnemo-extension)
+BuildRequires:  pkgconfig(thunarx-3)
 
 %description
 GtkHash is a GTK+ utility for computing message digests or checksums. Currently
@@ -28,56 +40,20 @@ supported hash functions include
 
 This package contains the GTK+2 version of the program.
 
-%files -f %{name}.lang
-%doc AUTHORS COPYING NEWS README TODO
-%{_bindir}/%{name}
-%{_datadir}/%{name}/
-%{_datadir}/applications/%{name}.desktop
-%{_datadir}/glib-2.0/schemas/app.gtkhash.gschema.xml
-%{_iconsdir}/hicolor/*/apps/%{name}.png
 
 #----------------------------------------------------------------------------
 
 %prep
-%setup -q
+%autosetup -p1
 
 %build
-./autogen.sh
-%configure2_5x \
-	--with-gtk=2.0 \
-	--enable-linux-crypto \
-	--enable-gcrypt \
-	--enable-glib-checksums \
-	--enable-mhash \
-	--disable-thunar \
-	--disable-nautilus \
-	--disable-schemas-compile
+%meson
 
-%make V=1
+%meson_build
 
 %install
-%makeinstall_std
-
-# install menu entry
-mkdir -p %{buildroot}%{_datadir}/applications/
-cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << EOF
-[Desktop Entry]
-Name=GtkHash
-Comment=Hash message digests or checksums
-Exec=%{name}
-Icon=%{name}
-Terminal=false
-Type=Application
-StartupNotify=true
-Categories=Utility;FileTools;
-EOF
-
-# install menu icons
-for N in 16 32 48 64 128;
-do
-convert %{SOURCE1} -scale ${N}x${N} $N.png;
-install -D -m 0644 $N.png %{buildroot}%{_iconsdir}/hicolor/${N}x${N}/apps/%{name}.png
-done
+%make_install
 
 %find_lang %{name}
 
+%files -f %{name}.lang
