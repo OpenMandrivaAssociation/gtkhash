@@ -51,7 +51,7 @@ This package contains the GTK+2 version of the program.
         -Dappstream=true \
         -Dbuild-caja=true \
         -Dbuild-nemo=true \
-        -Dbuild-thunar
+        -Dbuild-thunar=true
         
 # compiling nautilus plugin is disabled due upstream bug, not compatibile with nautilus gtk4 yet        
       
