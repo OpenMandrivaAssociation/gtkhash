@@ -12,6 +12,7 @@ Source0:        https://github.com/tristanheaven/%{name}/releases/download/v%{ve
 BuildRequires:  appstream-util
 BuildRequires:  gettext
 BuildRequires:  meson
+BuildRequires:  librsvg2
 BuildRequires:  mhash-devel
 BuildRequires:  pkgconfig(gtk+-3.0)
 BuildRequires:  pkgconfig(libb2)
