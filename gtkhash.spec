@@ -40,6 +40,40 @@ supported hash functions include
 
 This package contains the GTK+2 version of the program.
 
+%package        thunar
+Summary:        GtkHash extension for Thunar
+Group:          Graphical desktop/Xfce
+Requires:       thunar
+Requires:       %{name} >= %{version}-%{release}
+
+%description    thunar
+GtkHash extension for the Thunar file manger. It adds adds an additional tab
+called "Digests" to the file properties dialog.
+
+#----------------------------------------------------------------------------
+
+%package        nemo
+Summary:        GtkHash extension for Nemo
+Group:          Graphical desktop/Cinnamon
+Requires:       nemo
+Requires:       %{name} >= %{version}-%{release}
+
+%description    nemo
+GtkHash extension for the Nemo file manger. It adds adds an additional tab
+called "Digests" to the file properties dialog.
+
+#----------------------------------------------------------------------------
+
+%package        caja
+Summary:        GtkHash extension for Caja
+Group:          Graphical desktop/MATE
+Requires:       caja
+Requires:       %{name} >= %{version}-%{release}
+
+%description    caja
+GtkHash extension for the Caja file manger. It adds adds an additional tab
+called "Digests" to the file properties dialog.
+
 
 #----------------------------------------------------------------------------
 
@@ -67,5 +101,19 @@ This package contains the GTK+2 version of the program.
 %{_datadir}/applications/org.gtkhash.gtkhash.desktop
 %{_datadir}/glib-2.0/schemas/org.gtkhash.gschema.xml
 %{_datadir}/metainfo/org.gtkhash.gtkhash.appdata.xml
+%{_datadir}/glib-2.0/schemas/org.gtkhash.plugin.gschema.xml
 %{_iconsdir}/hicolor/*x*/apps/org.gtkhash.gtkhash.png
 %{_iconsdir}/hicolor/scalable/apps/org.gtkhash.gtkhash.svg
+
+%files caja
+%{_libdir}/caja/extensions-2.0/libgtkhash-properties-caja.so
+%{_datadir}/caja/extensions/libgtkhash-properties-caja.caja-extension
+%{_datadir}/metainfo/org.gtkhash.caja.metainfo.xml
+
+%files nemo
+%{_libdir}/nemo/extensions-3.0/libgtkhash-properties-nemo.so
+%{_datadir}/metainfo/org.gtkhash.nemo.metainfo.xml
+
+%files thunar
+%{_libdir}/thunarx-3/libgtkhash-properties-thunar.so
+%{_datadir}/metainfo/org.gtkhash.thunar.metainfo.xml
